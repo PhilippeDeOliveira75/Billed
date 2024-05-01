@@ -35,6 +35,9 @@ export default class NewBill {
       fileInput.value = ""
       
       return
+    } else {
+      // Cacher le message d'erreur
+      fileErrorMessage.style.display = "none"
     }
 
     // Stocker l'extension du fichier dans l'état du composant
