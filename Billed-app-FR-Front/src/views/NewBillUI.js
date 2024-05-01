@@ -27,17 +27,17 @@ export default () => {
                   </div>
                   <div class="col-half">
                     <label for="expense-name" class="bold-label">Nom de la dépense</label>
-                    <input type="text" id="expense-name" class="form-control blue-border" data-testid="expense-name" placeholder="Vol Paris Londres"/>
+                    <input required type="text" id="expense-name" class="form-control blue-border" data-testid="expense-name" placeholder="Vol Paris Londres"/>
                     <div id="nameErrorMessage" class="error-message"></div>
                   </div>
                   <div class="col-half">
                     <label for="datepicker" class="bold-label">Date</label>
-                    <input type="date" id="datepicker" class="form-control blue-border" data-testid="datepicker"/>
+                    <input required type="date" id="datepicker" class="form-control blue-border" data-testid="datepicker"/>
                     <div id="dateErrorMessage" class="error-message"></div>
                   </div>
                   <div class="col-half">
                     <label for="amount" class="bold-label">Montant TTC </label>
-                    <input type="number" id="amount" class="form-control blue-border input-icon input-icon-right" data-testid="amount" placeholder="348"/>
+                    <input required type="number" id="amount" class="form-control blue-border input-icon input-icon-right" data-testid="amount" placeholder="348"/>
                     <div id="amountErrorMessage" class="error-message"></div>
                   </div>
                   <div class="col-half-row">
@@ -48,7 +48,7 @@ export default () => {
                     </div>
                     <div class="flex-col">
                       <label for="pct" class="white-text">%</label>
-                      <input type="number"id="pct" class="form-control blue-border" data-testid="pct" placeholder="20" />
+                      <input required type="number"id="pct" class="form-control blue-border" data-testid="pct" placeholder="20" />
                       <div id="pctErrorMessage" class="error-message"></div>
                     </div>
                   </div>
@@ -60,7 +60,7 @@ export default () => {
                   </div>
                   <div class="col-half">
                     <label for="file" class="bold-label">Justificatif</label>
-                    <input id="file" type="file" class="form-control blue-border" data-testid="file" />
+                    <input required id="file" type="file" class="form-control blue-border" data-testid="file" />
                     <div id="fileErrorMessage" class="error-message"></div>
                   </div>
                 </div>

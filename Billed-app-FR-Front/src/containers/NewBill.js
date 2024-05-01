@@ -56,7 +56,6 @@ export default class NewBill {
         }
       })
       .then(({ fileUrl, key }) => {
-        console.log(fileUrl)
         this.billId = key
         this.fileUrl = fileUrl
         this.fileName = fileName
@@ -64,81 +63,30 @@ export default class NewBill {
       .catch(error => console.error(error))
   }
 
-  handleSubmit = e => {
-
-    e.preventDefault()
-
-    // Sélection des champs obligatoires et leurs messages d'erreur
-    const fields = [
-      { input: 'expense-name', errorId: 'nameErrorMessage', message: 'Vous devez ajouter le nom de la dépense' },
-      { input: 'datepicker', errorId: 'dateErrorMessage', message: 'Vous devez ajouter une date' },
-      { input: 'amount', errorId: 'amountErrorMessage', message: 'Vous devez ajouter le montant TTC' },
-      { input: 'vat', errorId: 'vatErrorMessage', message: 'Vous devez ajouter le montant de la TVA' },
-      { input: 'pct', errorId: 'pctErrorMessage', message: 'Vous devez ajouter le pourcentage de la TVA' },
-      { input: 'file', errorId: 'fileErrorMessage', message: 'Vous devez ajouter un fichier au format jpg, jpeg ou png' }
-    ]
-
-    // Vérification des champs vides
-    let isValid = true
-
-    fields.forEach(({ input, errorId, message }) => {
-      const inputElement = e.target.querySelector(`[data-testid="${input}"]`)
-      const errorElement = document.getElementById(errorId)
-
-      if (inputElement.value.trim() === '') {
-        errorElement.textContent = message
-        errorElement.style.display = 'block'
-        isValid = false;
-      } else {
-        errorElement.textContent = ''
-        errorElement.style.display = 'none'
-      }
-    })
-
-    // Vérifier si l'extension du fichier est autorisée avant de soumettre le formulaire
-    const allowedExtensions = ["jpeg", "jpg", "png"]
-    if (!allowedExtensions.includes(this.fileExtension)) {
-      const fileErrorMessage = document.getElementById("fileErrorMessage")
-      fileErrorMessage.textContent = "Extensions autorisées : jpeg, jpg ou png"
-      fileErrorMessage.style.display = "block"
-      isValid = false
-    }
-
-    // Envoi du formulaire si tout est valide
-    if (isValid) {
-      const email = JSON.parse(localStorage.getItem("user")).email
-      const nameInput = e.target.querySelector(`[data-testid="expense-name"]`)
-      const amountInput = e.target.querySelector(`[data-testid="amount"]`)
-      const dateInput = e.target.querySelector(`[data-testid="datepicker"]`)
-      const vatInput = e.target.querySelector(`[data-testid="vat"]`)
-      const pctInput = e.target.querySelector(`[data-testid="pct"]`)
-
-      const bill = {
-          email,
-          type: e.target.querySelector('select[data-testid="expense-type"]').value,
-          name: nameInput.value.trim(),
-          amount: parseInt(amountInput.value.trim()),
-          date: dateInput.value.trim(),
-          vat: vatInput.value.trim(),
-          pct: parseInt(pctInput.value.trim()),
-          commentary: e.target.querySelector('textarea[data-testid="commentary"]').value.trim(),
-          fileUrl: this.fileUrl,
-          fileName: this.fileName,
-          status: 'pending'
-      }
+handleSubmit = e => {
   
-      this.updateBill(bill);
-      this.onNavigate(ROUTES_PATH['Bills'])
+    e.preventDefault();
 
-    } else {
-      // Affichage du message d'erreur général
-      const submitError = document.getElementById('submitErrorMessage')
-      if (submitError) {
-          submitError.style.display = 'block'
-      }
-    }
+  
+    const email = JSON.parse(localStorage.getItem("user")).email;
+    const bill = {
+      email,
+      type: document.querySelector('#expense-type').value,
+      name: document.querySelector('#expense-name').value.trim(),
+      date: document.querySelector('#datepicker').value,
+      amount: parseInt(document.querySelector('#amount').value),
+      vat: parseInt(document.querySelector('#vat').value),
+      pct: parseInt(document.querySelector('#pct').value) || 20,
+      commentary: document.querySelector('#commentary').value,
+      fileUrl: this.fileUrl,
+      fileName: this.fileName,
+      status: 'pending'
+    };
+  
+    this.updateBill(bill);
+    this.onNavigate(ROUTES_PATH['Bills']);
   }
-
+  
   // not need to cover this function by tests
   /* istanbul ignore next */
   updateBill = (bill) => {

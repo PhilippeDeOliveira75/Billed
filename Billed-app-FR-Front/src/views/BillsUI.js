@@ -22,12 +22,11 @@ const rows = (data) => {
   }
   
   return data
-    .slice() // Copie du tableau pour éviter de modifier l'original
+    .slice() // Copie du tableau
     .sort((a, b) => new Date(b.date) - new Date(a.date)) // Tri des factures par date
     .map((bill) => row(bill)) // Génération des lignes de facture
     .join("") // Concaténation des lignes en une seule chaîne de caractères
 }
-
 
 
 export default ({ data: bills, loading, error }) => {
@@ -64,7 +63,7 @@ export default ({ data: bills, loading, error }) => {
           <button type="button" data-testid='btn-new-bill' class="btn btn-primary">Nouvelle note de frais</button>
         </div>
         <div id="data-table">
-        <table id="example" class="table table-striped" style="width:100%">
+        <table id="example" data-testid="example" class="table table-striped" style="width:100%">
           <thead>
               <tr>
                 <th>Type</th>
